@@ -30,6 +30,7 @@ if __name__ == '__main__':
                                 device=params.device, cuda=params.cuda)
 
     print('Saving obj files to [{}]'.format(os.path.abspath(results_dir)))
+    print(type(npy2obj.real_num_frames), npy2obj.real_num_frames)
     for frame_i in tqdm(range(npy2obj.real_num_frames)):
         npy2obj.save_obj(os.path.join(results_dir, 'frame{:03d}.obj'.format(frame_i)), frame_i)
 
