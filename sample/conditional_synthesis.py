@@ -147,6 +147,8 @@ def main():
     iterator = iter(data)
 
     input_motions, model_kwargs = next(iterator)
+    # print(input_motions.shape)
+    # print(model_kwargs)
 
     if args.use_fixed_dataset: # TODO: this is for debugging - need a neater way to do this for the final version - num_samples should be 10
         assert args.dataset == 'humanml' and args.abs_3d
@@ -154,12 +156,15 @@ def main():
 
     input_motions = input_motions.to(dist_util.dev()) # [nsamples, njoints=263/1, nfeats=1/3, nframes=196/200]
     input_masks = model_kwargs["y"]["mask"]  # [nsamples, 1, 1, nframes]
+    # print(input_masks.shape)
     input_lengths = model_kwargs["y"]["lengths"]  # [nsamples]
 
     model_kwargs['obs_x0'] = input_motions
     model_kwargs['obs_mask'], obs_joint_mask = get_keyframes_mask(data=input_motions, lengths=input_lengths, edit_mode=args.edit_mode,
                                                                   feature_mode=args.editable_features, trans_length=args.transition_length,
                                                                   get_joint_mask=True, n_keyframes=args.n_keyframes) # [nsamples, njoints, nfeats, nframes]
+    print(model_kwargs['obs_mask'].shape)
+    print(obs_joint_mask.shape)
 
     assert max_frames == input_motions.shape[-1]
 

@@ -136,6 +136,19 @@ class DataOptions:
         default=False,
         metadata={"help": "Drop redundant joints information for HumanML3D only. "
                   "Keep only 4 (root) + 21*3 joints position"})
+    motion_file: str = field(
+        default='',
+        metadata={
+            "help":
+            "Path to a text file that lists names of motions to be synthesized. Names must be a subset of dataset/uestc/info/motion_classes.txt if sampling from uestc, or a subset of dataset/humanact12/info/action_classes.txt if sampling from humanact12. If no file is specified, will take motion names from dataset."
+        })
+    mask_file: str = field(
+        default='',
+        metadata={
+            "help":
+            "Path to a text file that lists names of masks to be synthesized. Names must be a subset of dataset/uestc/info/mask_classes.txt if sampling from uestc, or a subset of dataset/humanact12/info/mask_classes.txt if sampling from humanact12. If no file is specified, will take mask names from dataset."
+        })
+
 
 
 @dataclass
